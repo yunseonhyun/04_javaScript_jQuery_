@@ -38,4 +38,35 @@ $(function () {
     $(".tab-content").slideUp(300);
     $("#" + targetTab).slideDown(300);
   });
+
+  // 3 : 프로그레스 바
+  $("#startProgress").click(function () {
+    $("#progressBar").animate(
+      {
+        // 클릭 실행 되면
+        // 가로 100% 채우고
+        // 2초 후 무언가를 할 것이다.
+        // 무언가를 할 것이다는 초가 필수가 아님
+        width: "100%",
+      },
+      2000,
+      function () {
+        // 2000 = 2초 후 실행할 기능
+        // 기존에 progressBar 내부에 %만 작성되어있는 텍스트를
+        // width 100%로 만들고 나면 텍스트를 100%로 교체
+        $("#progressBar").text("100%");
+      }
+    );
+    // #resetProgress 클릭했을대
+    // css(속성명 = "width", 속성값 = "0%") 만들기
+    // text("0%")
+    $("#resetProgress").click(function () {
+      $("#progressBar").css("width", "0%").text("0%");
+    });
+  });
+
+  // 4 : 3D 카드 플립 효과
+  $("#flipCard").click(function () {
+    $(this).toggleClass("flipped");
+  });
 });

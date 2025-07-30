@@ -63,7 +63,25 @@
 
       <div class="problem-section">
         <h3>2. 애니메이션 탭 메뉴</h3>
+        <!--
+        data- 뒤에 원하는 변수이름 붙여서 사용
+        버튼에서 어떤 탭과 연결이 되는지에 대한 정보를 저장
+        HTML 요소에 추가 정보를 담아두는 용도
+        [연결 관계]
+        [HTML 버튼] data-tab="tab1" -- >    id="tab1"
+                    id=tab1에 연결된 html 내용
+       
+        [HTML 버튼] data-tab="tab2" -- >    id="tab2"
+                    id=tab2에 연결된 html 내용
+                
+        data-tab 값과 id 값이 동일해야 연결
 
+        JS에서 작성한 표기법 확인
+        $(태그요소명칭).data()  : data-
+                      .data("html 에서 data- 뒤에 붙는 명칭")
+        ex ) [HTML] data-fruit      [JS] .data("fruit") 
+        // data-fruit에 작성된 fruit1, fruit2, ... 모두 바라보는 설정 
+        -->
         <div class="tab-menu">
           <button class="tab-btn active" data-tab="tab1">HTML</button>
           <button class="tab-btn" data-tab="tab2">CSS</button>
@@ -74,6 +92,7 @@
           <h4>HTML이란?</h4>
           <p>웹페이지의 구조를 만드는 마크업 언어입니다.</p>
         </div>
+
         <div id="tab2" class="tab-content">
           <h4>CSS란?</h4>
           <p>웹페이지의 스타일과 레이아웃을 정의하는 언어입니다.</p>
@@ -81,6 +100,26 @@
         <div id="tab3" class="tab-content">
           <h4>JavaScript란?</h4>
           <p>웹페이지에 동적 기능을 추가하는 프로그래밍 언어입니다.</p>
+        </div>
+      </div>
+      <div class="problem-section">
+        <h3>3. 프로그레스 바 애니메이션</h3>
+
+        <button id="startProgress">진행률 시작</button>
+        <button id="resetProgress">리셋</button>
+
+        <div class="progress-container">
+          <div class="progress-bar" id="progressBar">0%</div>
+        </div>
+      </div>
+      <div class="problem-section">
+        <h3>4. 3D 카드 플립 효과</h3>
+
+        <div class="card-container">
+          <div class="card" id="flipCard">
+            <div class="card-face card-front">클릭해서 뒤집기</div>
+            <div class="card-face card-back">놀라운 뒷면!</div>
+          </div>
         </div>
       </div>
     </div>

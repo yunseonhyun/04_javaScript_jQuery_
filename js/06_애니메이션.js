@@ -69,4 +69,30 @@ $(function () {
   $("#flipCard").click(function () {
     $(this).toggleClass("flipped");
   });
+
+  // 5 : 드롭 다운 메뉴
+  /* 
+  .hover()  : 마우스가 요소로 다가왔을 때 메서드(행동 = 기능)
+  .active() : 마우스로 요소를 선택했을 때 메서드(행동 = 기능)
+  $(선택자).hover(
+  // 기능 1번 
+  function() {
+  // 마우스가 요소 위에 올라갔을 때 실행할 기능
+  },
+  // 기능 2번
+  function(){
+  // 마우스가 요소에서 벗어났을 때 실행할 기능
+  })
+
+  $(선택자).hover(mouseEnter함수, mouseLeave함수);
+  
+   */
+  $(".dropdown").hover(
+    function () {
+      $("#dropdownMenu").slideDown(200);
+    },
+    function () {
+      $("#dropdownMenu").slideUp(200);
+    }
+  );
 });

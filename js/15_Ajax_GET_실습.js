@@ -9,6 +9,7 @@ $(function () {
   $("#btn6").click(getPosts);
   $("#btn7").click(userList);
   $("#btn8").click(searchUser);
+  $("#btn9").click(selectAlbum);
   // id가 btn1인 버튼을 클릭했을 떄 문제1번기능 함수에 담긴 기능 사용
 });
 // 문제 1 : 기본텍스트 데이터 가져오기
@@ -225,5 +226,30 @@ function searchUser() {
           `
         )
     );
+  });
+}
+
+// 문제 9 : 선택된 항목에 따른 데이터 가져오기
+// https://jsonplaceholder.typicode.com/albums/{albumId}/photos?_limit=3
+
+function selectAlbum() {
+  const albumId = $("#albumId").val(); // 사용자가 선택한 value 값 가져오기
+  $.get(
+    `https://jsonplaceholder.typicode.com/albums/${albumId}/photos?_limit=3`
+  ).done(function (data) {
+    $("#result9").html(
+      // select 선택을 진행할 때 filter를 사용해라를 만날 수 있음
+      // 주소값에서 작성된 모든 데이터를 조회할 때는
+      // filter를 굳이 사용하지 않아도 됨!!!!
+      data.map(
+        (photo) => `
+            <strong>${photo.title}</strong>
+            <p> ${photo.url}</p>
+        `
+      )
+    );
+    // data.map 형태로 map 내부 변수이름 photo를 이용해서
+    // title url을 <strong>${title}</strong>
+    // <p> ${url}</p>형태로 가져오기
   });
 }

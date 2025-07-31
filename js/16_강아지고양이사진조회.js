@@ -1,4 +1,4 @@
-// jQuery 이벤트 처리
+d; // jQuery 이벤트 처리
 $(function () {
   $("#btn1").click(getCats);
   $("#btn2").click(getDogs);
@@ -47,7 +47,22 @@ function getDogs() {
   // 여기에 코드 작성
   // picsum.photos API 사용하거나 다른 강아지 API 사용
   // 5장의 강아지 사진을 가져와서 표시하세요
-
+  $.get(`https://api.thedogapi.com/v1/images/search?limit=3`).done(function (
+    data
+  ) {
+    const fiveDog = data.slice(0, 5);
+    $("#result2").html(
+      fiveDog.map(
+        (dog) =>
+          `
+            <div class="photo-item">
+                <img src="${dog.url}">
+                <p>강아지 ID : ${dog.id}</p>
+            </div>
+            `
+      )
+    );
+  });
   /*
             힌트:
             0. slice() 이용해서 0번부터 4번까지 가져오기
@@ -70,10 +85,19 @@ function getSelectedAnimal() {
     '<div class="loading">선택한 동물 사진을 가져오는 중...</div>'
   );
 
-  // 여기에 코드 작성
-  // selected 값이 "cat"이면 고양이 사진 4장
-  // selected 값이 "dog"이면 강아지 사진 4장
-  // if문을 사용해서 조건에 따라 다른 사진 표시
+  $.get(`https://api.the${selected}api.com/v1/images/search?limit=3`).done(
+    function (data) {
+      const count = data.slice(0, 5);
+      $("#result3").html(
+        count.map(
+          (animal) => `
+        <img src="${animal.url}"/>
+        <p> ${selected} ID = ${animal.id}</p>
+        `
+        )
+      );
+    }
+  );
 }
 
 // 문제 4: 원하는 개수만큼 고양이 사진 가져오기
@@ -89,11 +113,31 @@ function getCatsWithCount() {
 
   $("#result4").html('<div class="loading">고양이 사진을 가져오는 중...</div>');
 
+  // 마지막에 ,나 ` 설정되는 것을 "" 빈 값으로 처리
+  $.get(`https://api.thecatapi.com/v1/images/search?limit=3`).done(function (
+    data
+  ) {
+    const photo = data.slice(0, count);
+    $("#result4").html(
+      `
+            <div class="photo-grid">
+    ${photo
+      .map(
+        (cat) =>
+          `<div class="photo-item">
+                    <img src="${cat.url}">
+                </div>`
+      )
+      .join("")}
+ </div>`
+    );
+  });
   // 여기에 코드 작성
   // count 개수만큼 고양이 사진 가져오기
   // Array.from({length: count}, (_, i) => ...) 패턴 사용
 }
 
+// 문제 5: 랜덤 동물 사진 갤러리
 // 문제 5: 랜덤 동물 사진 갤러리
 function getRandomGallery() {
   $("#result5").html(
@@ -104,4 +148,16 @@ function getRandomGallery() {
   // 고양이 4장 + 강아지 4장 = 총 8장
   // 두 배열을 합쳐서 하나의 갤러리로 표시
   // concat()이나 spread operator(...) 사용 가능
+  animal("cat");
+  animal("dog");
+}
+function animal(동물이름) {
+  $.get(`https://api.the${동물이름}api.com/v1/images/search?limit=10`).done(
+    function (data) {
+      const count = data.slice(0, 5);
+      $("#result5").html(
+        $("#result5").html() + count.map((i) => `<img src="${i.url}">`)
+      );
+    }
+  );
 }

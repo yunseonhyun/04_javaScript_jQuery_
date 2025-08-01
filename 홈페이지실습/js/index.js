@@ -41,31 +41,35 @@ function loginCheck() {
     `
   );
 
-  if (
-    (username === "admin" && password === "1234") ||
-    (username === "user" && password === "1234")
-  ) {
-    // 1. form-group 숨김처리, loginBtn -> 로그아웃 버튼 변경
-    // 2. 로그아웃 버튼 클릭했을 경우 form-group 보이고 로그인 버튼으로 변경
-    $(".form-group").hide();
-    $("#loginBtn").hide();
-    $("#logoutBtn").show();
-    $("#loginResult").html(
-      `
+  // $.get이용해서 json에ㅔ 해당하는 username과 password가 일치하는지 확인
+  // $.get.deon
+
+  $.get("../json/userinfo.json")
+    // function(data) {} 익명함수를 idPwCheck 함수 이름으로 변경 후 done 내부에서 idPwCheck 함수 호출하여 사용
+    .done(function (data) {
+      if (data.users[username] && data.users[username].password === password) {
+        // 1. form-group 숨김처리, loginBtn -> 로그아웃 버튼 변경
+        // 2. 로그아웃 버튼 클릭했을 경우 form-group 보이고 로그인 버튼으로 변경
+        $(".form-group").hide();
+        $("#loginBtn").hide();
+        $("#logoutBtn").show();
+        $("#loginResult").html(
+          `
         <div class="success">
             <p><strong>로그인성공!</strong></p>
             <p>${username}님, 환영합니다.</p>
         </div>
         `
-    );
-  } else {
-    $("#loginResult").html(
-      `
+        );
+      } else {
+        $("#loginResult").html(
+          `
         <div class="error"> 아이디 또는 비밀번호가 일치하지 않습니다.</div> 
         
         `
-    );
-  }
+        );
+      }
+    });
 }
 
 function logoutCheck() {

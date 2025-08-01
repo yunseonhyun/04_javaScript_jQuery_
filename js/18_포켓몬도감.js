@@ -44,7 +44,8 @@ function pokeInfo(page) {
   const ids = range(startId, startId + 9);
 
   $("#pokemonContainer").html(""); // 페이지 변경될 때마다 기존 데이터 없애기
-
+  // 페이지 번호 변경 설정
+  $("#pageInfo").html(`페이지 ${page}`);
   ids.map((i) => {
     $.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
       // 하나의 포켓몬을 개발자가 지정해서 선택한 상황

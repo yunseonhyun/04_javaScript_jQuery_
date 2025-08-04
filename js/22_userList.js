@@ -1,5 +1,6 @@
 $(function () {
   showUsers();
+  $("#clear-all").click(deleteUserList);
 });
 
 function showUsers() {
@@ -25,4 +26,20 @@ function showUsers() {
   );
 
   $("#user-list").html(userHTML);
+}
+
+function deleteUserList(e) {
+  e.preventDefault(); // a의 href로 이동하는 기본 동작 방지
+
+  // 사용자에게 정말 삭제할 것인지 최종 확인 !!
+  if (confirm("정말 모든 제품을 삭제하시겠습니까? ")) {
+    // confirm에서 확인을 눌렀을 경우
+    // localStorage에 productList에서 데이터만 제거
+    localStorage.removeItem("userList");
+
+    // 화면을 자동으로 F5(새로고침) 하여 변경사항을 반영
+    alert("모든 상품이 삭제되었습니다.");
+    location.reload(); // 현재 페이지 새로고침 window. 생략가능
+    // window.location.reload();
+  }
 }

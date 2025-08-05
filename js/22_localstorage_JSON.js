@@ -42,6 +42,31 @@ new Date().toLocalString("ko-KR");한국 현재 시간 기준 문자열로 저�
 
 function searchData(e) {
   e.preventDefault();
+  const searchValue = $("#searchValue").val().trim();
+
+  let userList = JSON.parse(localStorage.getItem("userList") || "[]");
+
+  // 배열 내부에 검색한 값이 존재하는가?
+  const searchResult = userList.filter((data) => data.name === searchValue);
+
+  let html = `<h3>검색결과</h3>`;
+  if (searchResult.length > 0) {
+    // 검색 결과를 보여줄 것
+    html += searchResult
+      .map(
+        (data) =>
+          `<div class="item-row">
+          <strong>${data.name}님</strong><br>
+          나이 :${data.age}<br>
+          이메일 :${data.email}<br>
+          가입일자 :${data.createAt}<br>
+      </div>`
+      )
+      .join("");
+  } else {
+    html += `존재하지 않는 회원입니다`;
+  }
+  $("#searchResult").html(html);
 }
 
 function showAllData(e) {

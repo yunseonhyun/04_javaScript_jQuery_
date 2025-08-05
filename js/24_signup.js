@@ -27,18 +27,18 @@ $(function () {
     // - 입력값 가져오기
     // - localStorage에 저장
     // - 성공 메시지 표시
-    let saveUsers = JSON.parse(localStorage.getItem("userList") || "[]");
-    const inputEmail = $("#inputEmail").val();
+    let userList = JSON.parse(localStorage.getItem("users") || "[]");
+    const email = $("#inputEmail").val();
     const phone = $("#phone").val();
 
     // 기존 배열 목록 가져오기
     // localStorage 문자열만 취급하므로, [] 또한 ""로 감싸서 문자열 처리
 
     const newUser = {
-      email: inputEmail,
+      email: email,
       phone: phone,
     };
-    saveUsers.push(newUser);
+    userList.push(newUser);
 
     localStorage.setItem("userList", JSON.stringify(newUser));
   });

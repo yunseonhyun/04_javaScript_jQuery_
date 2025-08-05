@@ -23,10 +23,11 @@ $(function () {
     const isDup = userList.some((u) => u.email === email);
 
     // if(isDup.length > 0) {filter를 사용할 때는 length와 비교 필요}
-    if (isDup.length > 0) { // 리스트에 해당하는 값이 존재하면 이미 true이므로 추가 조건 작성 x
+    if (isDup.length > 0) {
+      // 리스트에 해당하는 값이 존재하면 이미 true이므로 추가 조건 작성 x
       $("#result").html(`
         <span style="color : red;">이미 사용중인 이메일입니다.</span>`);
-      $("#send").prop("disabled", true);  
+      $("#send").prop("disabled", true);
     } else {
       $("#result").html(
         `<span style="color : green;">사용가능한 이메일 입니다.</span>`
@@ -54,7 +55,6 @@ $(function () {
   });
 });
 
-
 /*
 open : 열다 / 무언가를 여는 행위
 메인 html에서 
@@ -73,5 +73,5 @@ opener.document.querySelector("inputEmail").value          = document.querySelec
 나를 열어준 signup.html에서 아이디가 inputEmail 해당하는 값에 ↑ 현재 emailCheck.html에서 childeEmail 내에 작성한 값을
                                                            |
                                                            |
-                                                    value로 전달하겠다   
+                                                      value로 전달하겠다   
 */

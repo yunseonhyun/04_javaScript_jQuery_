@@ -1,96 +1,55 @@
 $(function () {
-  $("a").click(signUp);
+  $("#saveData").click(saveDataFn);
+  $("#getBtn").click(getDataFn);
 });
 
-function signUp(e) {
-  e.preventDefault(); // 기본 링크 동작 방지
-  // 제출하기 일시 정지 상태로
-  // 아래 정규식, 데이터 저장 여부 등과 같은 규정을
-  // 모두 확인한 후 result.html 이동할 수 있도록 설정
+// 크롬이나 엣지 등 브라우저에서 F12 클릭
+// F12 -> 애플리케이션 -> 로컬 스토리지 내부 확인
+// 해당하는 URL 주소를 클릭하여 내부에 저장된 키 값 확인
+// 키 값은 문자열로 무조건 되어있음
+// ""가 없다하여 문자열이 아닌 것이 아니라 생략상태!!!
 
-  // 입력값 가져오기
-  const username = $("#username").val();
-  const userpw = $("#userpw").val();
+// 인터넷 창에서 크롬일경우 chrome://version 입력
+// 프로필 경로	C:\Users\tj\AppData\Local\Google\Chrome\User Data\Default
+// 프로필 경로를 따라서 폴더 내부로 들어가면 local Storage 폴더가 존재할 것
+// 폴더 내부에 db나 dbl로 저장된 내부에 컴퓨터가 읽을 수 있는 글씨로 존재.
+// localStorage 내부에서는 문자열만 저장 = 인터넷 주소 즐겨찾기나 간단한 읽는 정도의 데이터를 저장하므로 
+// 소비자가 인터넷을 사용함에 있어 불편을 느끼지 않을 최소한의 저장 자료형을 사용!
+// 악성 코드 방지 문자열만 가능하고 배열또한 문자열로 저장 ""
+function saveDataFn(e) {
+  // button type = submit 이거나 a태그로 클릭할 경우 제출방지사용
+  // a 태그 속성 기본값 href로 들어가는 것을 방지 (예 : 마이페이지, 임직원페이지 접근 가능한 유저인가?)
+  e.preventDefault(); // 제출 방지기능 type="button"일 경우 사용 안해도 됨
 
-  // json 저장할 때 사용 예정 DB에 저장할 때 나중에 등장! $.post()
+  // 소비자가 작성한 키와 값으로 저장할 예정
+  const inputKey = $("#key").val(); // 기본 자바스크립트에서는 value로 사용
+  const inputValue = $("#value").val(); // 기본 자바스크립트에서는 value로 사용
 
-  // localStorage에 저장
-  // username과 userpw는 맨 마지막에 가입된 사람의 정보로 덮어쓰기다 됨!!
-  // 기존 회원 목록 가져오기(없으면 빈 배열 형태)
-  // 배열에 기존 회원 목록 뒤에 새로 가입한 유저의 목록 추가
-  // localStorage에 목록 리스트 형태로 저장
-
-  // 기존 회원 목록 가져오기 (없으면 빈 배열 형태) 가져온 값을 userList 변수 이름에 담아두기
-  /**
-   * localStorage는 문자열만 저장 가능
-   * JSON parse()     : JSON 형식의 문자열(String)을 javascript의 객체(object)나 배열(Array) 변환
-   *                    문자열 -> 객체 배열 형태로 변환
-   * JSON stringify() : javascript의 객체(object)나 배열(Array)을 JSON 형식의 문자열(String) 변환
-   *                    객체 or 배열 -> 문자열 변환
-   * 
-   * .setItem("키이름", 값)   : 데이터를 저장할 때 사용
-   *                            마치 물건에 이름표(key)를 붙여 사물함에 넣는 것과 같음
-   *  
-   * .getItem("키이름")       : serItem()으로 저장해 둔 데이터를 가져올 때 사용
-   *                            사물함에서 이름표(key)를 보고 물건을 꺼내는 것과 같음
-   * 
-   * 단순한 글자나 숫자 데이터를 저장할 때는 parse()나 stringify()를 작성할 필요 없음
-   * 왜냐하면 문자열 형태로 하나씩 저장될 것이기 때문
-   * 
-   * 배열이나 목록은 문자열로 젖아된 형태를 배열이나 리스트 형태로 변환해서 
-   * JavaScript 내부에 활용할 것이기 때문에 변환 필요 
-   * 
-   */
-  let userList = JSON.parse(localStorage.getItem("userList") || "[]"); // 문자열 -> 배열, 리스트 형태 변환
-
-  // 새 회원 정보를 담을 json 형태의 배열 생성
-  const newUser = {
-    username: username,
-    password: userpw,
-  };
-
-  // 빈 배열이나 기존 배열에 새로운 유저 정보를 추가
-   //localStorage에 배열로 저장 -> userList.html에서 유저 목록을 확인하기 위한 배열 저장 형태
-  /* 
-  userList localStorage에 키 명칭으로 지정되어 있는 유저 목록을 담고 있는 변수이름
-  .push() = 브라우저에서 저장된 리스트가 있든 없든 .push() 저장한다. 뒤로 추가하여 항목을 저장
-  newUser = 위에서 소비자가 작성한 값을 키:username 값 : username 형태를 가져와서 저장
-  */
-  userList.push(newUser);
-  localStorage.setItem("userList", JSON.stringify(userList)); // localStorage 저장할 때는 배열, 리스트 -> 문자열 형태로 변환
-
-  // result.html에서 개별 사용자가 본인이 회원가입을 무사히 했는지 확인하기 위한 변수이름 저장형태
-  localStorage.setItem("username", username);
-  localStorage.setItem("userpw", userpw);
-
-  // 모두 저장하고 나서 결과 페이지로 이동
-  // window = 자바 스크립트에서 모든 객체의 최상위 부모
-  // window 내부에 document와 location, history와 같은 객체 존재
-  // window.document
-
-  // window 내 컴퓨터에서 . 주소가. 링크도 되어있는 = 로 이동
-  /* 
-  window = 실질적으로 자바스크립트 내의 모든 ~~~ 예약어를 지닌 존재
-    window.alert  window.document로 사용하는 것이 맞으나 사용빈도가 높은경우 window. 생략
-    
-    location = 현재 페이지의 URL 정보를 담은 객체 
-    location.reload() : 페이지 새로고침
-    location.href = 현재페이지에서 ~~~로 이동
-    */
-  window.location.href = "22_result.html";
+  // 실제 localStorage에 저장!
+  // .setItem() : 기능 내부에는 키와 값을 저장한다 -> 그롬에서 기본적으로 제공하는 저장할 위치에
+  // 소비자가 작서한 데이터의 키와 값을 저장해놓는 경로까지 작성
+  localStorage.setItem(inputKey, inputValue); // 기본적으로 문자열
 }
 
-/**
- * localStorage에서 회원가입을 진행
- * 입력된 정보는 두가지 형태로 저장
- * 개별 정보 : 현재 가입한 사용자의 아이디(username)과 비밀번호(userpw)가 단일 항목 저장
- * 목록 정보 : 기존 회원 목록에 현재 가입한 사용자의 정보를 추가하여 전체 회원 목록(userList) 배열 형태 저장
- *
- * result.html : 가입이 완료되면 개별 가입 확인을 위해 결과 페이지로 이동
- * localStorage에 저장된 개별 정보를 가져와 소비자가 작성한 데이터를 확인할 수 있도록 설정
- *
- * userList.html : 가입이 모두 완료되어 localStorage에 저장된 목록을 확인
- * localStorge에 저장된 목록 정보를 가져와 사이트에 가입한 모든 회원의 아이디와 비밀번호를 화면에 표시
- *
- * 크롬이나 엣지 등 브라우저의 데이터 모두 지우기를 하기 전까지 😁
- */
+function getDataFn(e) {
+  e.preventDefault();
+  const inputKey = $("#getKey").val();
+
+  // 저장된 데이터를 가져올 때는
+  // 가져오는 키의 명칭만 작성
+  // 가져온 데이터를 소비자의 눈으로 확인할 수 있도록
+  // JS 변수이름에 담아서 html에 넘겨줄 것
+
+  // .getItem() : 기능 내부에 키를 활용해서 값을 가져온다. 값을 가져오는 위치는 크롬에서 기본적으로 저장하는 위치
+  const getValue = localStorage.getItem(inputKey);
+
+  // 가져온 결과를 표시하자!
+
+  $("#getResult").html(
+    `
+    <strong>가져오기 성공!</strong>
+    저장된 키의 명칭 : ${inputKey}<br>
+    저장된 키 내부에 존재하는 값 : ${getValue}
+    `
+  );
+}

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>localStorage 개요</title>
     <script
       src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
@@ -13,17 +13,26 @@
     <link rel="icon" type="image/png" href="../images/pumkin.png" />
   </head>
   <body>
+    <h1>local Storage 동작 원리</h1>
     <div class="container">
-      <label>
-        아이디 :
-        <input type="text" id="username" name="username" required />
-      </label>
-      <label>
-        비밀번호 :
-        <input type="password" id="userpw" name="userpw" required />
-      </label>
-      <a href="22_result.html">회원가입</a>
+      <h2>1️⃣데이터 저장하기</h2>
+      <input type="text" id="key" placeholder="저장할 이름(예: 내이름)" />
+      <input type="text" id="value" placeholder="저장할 값(예: 홍길동)" />
+      <button id="saveData">저장하기</button>
+
+      <div class="result" id="saveResult"></div>
     </div>
+    <div class="container">
+      <h2>2️⃣데이터 가져오기</h2>
+      <input type="text" id="getKey" placeholder="가져올 이름" />
+      <button id="getBtn">가져오기</button>
+
+      <div id="getResult" class="result"></div>
+    </div>
+    <div class="container">
+      <h2>3️⃣현재 저장된 모든 데이터</h2>
+    </div>
+
     <script src="../js/22_localStorage.js"></script>
   </body>
 </html>

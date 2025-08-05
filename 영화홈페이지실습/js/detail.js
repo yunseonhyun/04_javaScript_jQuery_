@@ -26,7 +26,7 @@ $(function () {
 
 function loadMovieDetail(전달받은id확인) {
   // id로 전달한 고유 id를 확인해서 상세보기창으로 이동 가능
-  $.get(`https://ghibliapi.vercel.app/films/${전달받은id학인}`).done(function (
+  $.get(`https://ghibliapi.vercel.app/films/${전달받은id확인}`).done(function (
     data
   ) {
     $(".loading").hide();
@@ -35,5 +35,13 @@ function loadMovieDetail(전달받은id확인) {
 }
 
 function 무비상세보기(movie) {
+  $("#movieDetail").show();
+  $("#moviePoster").attr("src", movie.image);
   $("#movieTitle").text(movie.title);
+  $("#movieYear").text(movie.release_date + "년");
+  $("#movieDirector").text(movie.director);
+  $("#movieProducer").text(movie.producer);
+  $("#movieRelease").text(movie.release_date);
+  $("#movieRuntime").text(movie.running_time);
+  $("#movieDescription").text(movie.description);
 }

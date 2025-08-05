@@ -225,3 +225,19 @@ body {
     font-size: 2rem;
   }
 }
+
+.detail-link {
+  color: #74b9ff;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: underline;
+  transition: all 0.3s ease;
+}
+
+.detail-link:hover {
+  color: #0984e3;
+  background: rgba(116, 185, 255, 0.1);
+  padding: 2px 4px;
+  border-radius: 4px;
+  text-decoration: none;
+}

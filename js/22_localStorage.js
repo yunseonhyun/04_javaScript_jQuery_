@@ -1,6 +1,8 @@
 $(function () {
   $("#saveData").click(saveDataFn);
   $("#getBtn").click(getDataFn);
+  $("#showAllBtn").click(showAllDataFn);
+  $("#clearAllBtn").click(clearAllDataFn);
 });
 
 // 크롬이나 엣지 등 브라우저에서 F12 클릭
@@ -13,7 +15,7 @@ $(function () {
 // 프로필 경로	C:\Users\tj\AppData\Local\Google\Chrome\User Data\Default
 // 프로필 경로를 따라서 폴더 내부로 들어가면 local Storage 폴더가 존재할 것
 // 폴더 내부에 db나 dbl로 저장된 내부에 컴퓨터가 읽을 수 있는 글씨로 존재.
-// localStorage 내부에서는 문자열만 저장 = 인터넷 주소 즐겨찾기나 간단한 읽는 정도의 데이터를 저장하므로 
+// localStorage 내부에서는 문자열만 저장 = 인터넷 주소 즐겨찾기나 간단한 읽는 정도의 데이터를 저장하므로
 // 소비자가 인터넷을 사용함에 있어 불편을 느끼지 않을 최소한의 저장 자료형을 사용!
 // 악성 코드 방지 문자열만 가능하고 배열또한 문자열로 저장 ""
 function saveDataFn(e) {
@@ -52,4 +54,39 @@ function getDataFn(e) {
     저장된 키 내부에 존재하는 값 : ${getValue}
     `
   );
+}
+
+// 키의 이름을 가져올 때는 index 번호를 활용해서 0번째에 존재하는 key 명칭을 가져온다
+// 가지고 온 키의 명칭을 활용해서 값을 가져올 수 있다.
+// getkey = index 번호
+// getvalue = key의 명칭
+
+// set 저장할 때는 순차적으로 0번부터 저장
+
+// for문 보다 로컬스토리지에 리스트목록을 저장하는 것이 메모리 활용적
+// 로컬스토리지에 데이터를 저장할 때 배열, 리스트 형태로 저장
+function showAllDataFn(e) {
+  e.preventDefault();
+  let html = `<h3>크롬 브라우저에 저장된 데이터들 확인</h3><ul>`;
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    html += `
+    <li>
+        <strong>${key}</strong>:
+        ${localStorage.getItem(key)}
+    </li>`;
+  }
+
+  html += "</ul>";
+
+  $("#allData").html(html);
+}
+
+function clearAllDataFn(e) {
+  e.preventDefault();
+
+  if (confirm("정말로 모든 데이터를 삭제하시겠습니까?")) {
+    localStorage.clear();
+  }
+  showAllDataFn();
 }

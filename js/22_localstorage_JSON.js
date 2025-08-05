@@ -47,19 +47,34 @@ function searchData(e) {
   let userList = JSON.parse(localStorage.getItem("userList") || "[]");
 
   // 배열 내부에 검색한 값이 존재하는가?
+  /*
+  
+  userList.filter((data) => data.name === searchValue)
+  userList에서 전달받은 목록 중에서
+  .filter() : 걸러낼 것이다
+  data : data라는 변수 이름에 userList에서 가져온 정보를 하나씩 담아서
+  data.name === searchValue : data 내부에 이름과 소비자가 검색한 value와 일치하는 것만 
+  searchResult 변수 이름에 담고 있겠다.
+  
+  */
   const searchResult = userList.filter((data) => data.name === searchValue);
 
   let html = `<h3>검색결과</h3>`;
   if (searchResult.length > 0) {
     // 검색 결과를 보여줄 것
+    /*
+    filter 내부에 작성된 data는 filter 에서 소비자가 검색한 데이터와 일치하는지 확인하기 위해 사용
+    map 내부에 작성된 data는 검색완료된 유저 목록을 
+    하나씩 꺼내서 소비자에게 걸러낸 결과값을 보여주기 위해 활용되는 변수이름
+    */
     html += searchResult
       .map(
-        (data) =>
+        (abc) =>
           `<div class="item-row">
-          <strong>${data.name}님</strong><br>
-          나이 :${data.age}<br>
-          이메일 :${data.email}<br>
-          가입일자 :${data.createAt}<br>
+          <strong>${abc.name}님</strong><br>
+          나이 :${abc.age}<br>
+          이메일 :${abc.email}<br>
+          가입일자 :${abc.createAt}<br>
       </div>`
       )
       .join("");

@@ -3,7 +3,7 @@ $(function () {
   $("#emailCheck").click(function () {
     // 팝업 설정
     const popupWidth = 450;
-    const popupHeight = 200;
+    const popupHeight = 450;
     // TODO: 화면 중앙에 팝업 띄우기
 
     const left = (window.screen.width - popupWidth) / 2;

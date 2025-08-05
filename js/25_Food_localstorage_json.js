@@ -24,7 +24,7 @@ function addFoodData(e) {
     foodName: foodName,
     price: price,
     category: category,
-    creaeAt: new Date().toLocaleString("ko-KR"), //저장시간 현재시간으로 한국기준 설정
+    createAt: new Date().toLocaleString("ko-KR"), //저장시간 현재시간으로 한국기준 설정
   };
   // js에서 foodList 목록에 newFood 데이터 맨 마지막에 추가
   foodList.push(newFood);
@@ -38,10 +38,36 @@ function addFoodData(e) {
 
 function searchFoodData(e) {
   e.preventDefault();
+
+  const searchValue = $("#searchValue").val().trim();
+
+  let foodList = JSON.parse(localStorage.getItem("foodList") || "[]");
+
+  // 검색결과가 존재할 경우 검색결과 보여주기
+  const searchFoodDatas = foodList.filter(
+    (food) => food.foodName === searchValue
+  );
+
+  let html = `<h3>검색결과</h3>`;
+  if (searchFoodDatas.length > 0) {
+    html += searchFoodDatas
+      .map(
+        (f) =>
+          `<div class="item-row">
+          이름 :${f.foodName}<br>
+          가격 :${f.price}<br>
+          종류 :${f.category}<br>
+      </div>`
+      )
+      .join("");
+  } else {
+    html += `존재하지 않는 음식입니다`;
+  }
+  $("#searchResult").html(html).show(); // display : none를 볼 수 있도록 설정하는 기능
 }
 
 function showAllFoodData(e) {
-    /* 
+  /* 
     showAllFoodData(e) : 행동이 들어왔을 때
                          행동에 대한 결과를 수행
             버튼이나 input처럼 특정행위가 없을 때는

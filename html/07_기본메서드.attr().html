@@ -68,6 +68,22 @@
 
     </pre
       >
+      <h2>기본 자바스크립트 attr 속성</h2>
+      <pre>
+        
+        1. 속성값 가져오기 .getAttribute();
+        document.querySelector("선택자").getAttribute("속성명");
+
+        2. 속성값 설정하기 .setAttribute()
+        document.querySelector("선택자").setAttribute("속성명","값");
+
+        3.여러 속성 동시 설정
+        document.querySelector("선택자").setAttribute("속성명1","값1").setAttribute("속성명2","값2");
+
+        4.속성제거
+        document.querySelector("선택자").removeAttribute('속성명','값');
+        document.querySelector("선택자").removeAttribute('속성명');
+      </pre>
     </div>
     <script src="../js/07_기본메서드.attr().js"></script>
   </body>

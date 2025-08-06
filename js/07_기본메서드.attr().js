@@ -1,4 +1,6 @@
 $(function () {
+  $(".attrDiv").attr("style", "margin-top:10px;");
+
   $("#changeImage").click(imgFn);
   $("#changeAlt").click(altFn);
   $("#changeLink").click(linkFn);
